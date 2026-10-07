@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Aqua Medicines | Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">AQUACULTURE SUPPLIES</p>
+    <h1>Care for your pond.<br>Support healthier fish.</h1>
+    <p>Browse pond-care and aquaculture products.</p>
+    <a class="button" href="#products">Shop products</a>
+  </div>
+  <div class="hero-icon">🐟</div>
+</section>
+
+<h2 id="products">Our Products</h2>
+
+<div class="product-grid">
+  {% for product in products %}
+  <article class="product-card">
+    {% if product.image_url %}
+      <img class="product-image"
+           src="{{ product.image_url }}"
+           alt="{{ product.name }}">
+    {% else %}
+      <div class="product-placeholder">🐠</div>
+    {% endif %}
+
+    <div class="product-body">
+      <h3>{{ product.name }}</h3>
+      <p class="muted">{{ product.description|truncate(100) }}</p>
+      <p class="price">₹{{ "%.2f"|format(product.price) }}</p>
+      <p>Stock: {{ product.stock }}</p>
+
+      <div class="actions">
+        <a class="button secondary"
+           href="{{ url_for('product_detail', product_id=product.id) }}">
+          Details
+        </a>
+
+        {% if product.stock > 0 %}
+        <form method="post"
+              action="{{ url_for('add_to_cart', product_id=product.id) }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit">Add to cart</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </article>
+  {% else %}
+    <p>No products available yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

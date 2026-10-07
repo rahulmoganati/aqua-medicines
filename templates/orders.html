@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}My Orders | Aqua Medicines{% endblock %}
+
+{% block content %}
+<h1>My Orders</h1>
+
+{% for order in orders %}
+<section class="order-card">
+  <div class="order-heading">
+    <h2>Order #{{ order.id }}</h2>
+    <span>{{ order.status }}</span>
+  </div>
+
+  <p>Order date: {{ order.created_at or "Not available" }}</p>
+  <p>Payment: {{ order.payment_method }}</p>
+
+  {% for item in order.items %}
+  <p>
+    {{ item.product_name }} × {{ item.quantity }}
+    — ₹{{ "%.2f"|format(item.unit_price * item.quantity) }}
+  </p>
+  {% endfor %}
+
+  <strong>Total: ₹{{ "%.2f"|format(order.total) }}</strong>
+  <p>Delivery address: {{ order.address }}</p>
+</section>
+{% else %}
+<p>You have not placed any orders yet.</p>
+{% endfor %}
+{% endblock %}

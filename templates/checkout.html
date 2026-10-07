@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Checkout | Aqua Medicines{% endblock %}
+
+{% block content %}
+<div class="checkout-layout">
+  <section class="form-card">
+    <h1>Checkout</h1>
+
+    <form method="post">
+      <label>Full Name
+        <input type="text" name="customer_name"
+               value="{{ current_user.name }}" required>
+      </label>
+
+      <label>Phone Number
+        <input type="tel" name="phone" required>
+      </label>
+
+      <label>Delivery Address
+        <textarea name="address" rows="4" required></textarea>
+      </label>
+
+      <fieldset>
+        <legend>Payment Method</legend>
+
+        <label class="radio-label">
+          <input type="radio" name="payment_method"
+                 value="COD" checked>
+          Cash on Delivery
+        </label>
+
+        <label class="radio-label">
+          <input type="radio" name="payment_method"
+                 value="UPI">
+          UPI
+        </label>
+
+        <label class="radio-label">
+          <input type="radio" name="payment_method"
+                 value="CARD">
+          Card
+        </label>
+      </fieldset>
+
+      <p class="muted">
+        UPI and card payments are placeholders. No online payment
+        is processed by this demo.
+      </p>
+
+      <button class="button full" type="submit">
+        Place Order — ₹{{ "%.2f"|format(total) }}
+      </button>
+    </form>
+  </section>
+
+  <aside class="summary-card">
+    <h2>Order Summary</h2>
+
+    {% for row in items %}
+    <p>
+      {{ row.product.name }} × {{ row.quantity }}
+      <strong>₹{{ "%.2f"|format(row.subtotal) }}</strong>
+    </p>
+    {% endfor %}
+
+    <hr>
+    <h3>Total: ₹{{ "%.2f"|format(total) }}</h3>
+  </aside>
+</div>
+{% endblock %}

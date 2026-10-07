@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Register | Aqua Medicines{% endblock %}
+
+{% block content %}
+<div class="form-card">
+  <h1>Create Account</h1>
+
+  <form method="post">
+    <label>Full Name
+      <input type="text" name="name" maxlength="120" required>
+    </label>
+
+    <label>Email
+      <input type="email" name="email" required>
+    </label>
+
+    <label>Password (minimum 8 characters)
+      <input type="password" name="password"
+             minlength="8" required>
+    </label>
+
+    <button class="button full" type="submit">Register</button>
+  </form>
+</div>
+{% endblock %}

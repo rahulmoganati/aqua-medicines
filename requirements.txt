@@ -1,0 +1,7 @@
+Flask
+Flask-SQLAlchemy
+python-dotenv
+gunicorn
+PyMySQL
+cryptography
+qrcode[pil]

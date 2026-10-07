@@ -1,0 +1,6 @@
+Flask
+Flask-SQLA1chemy
+python-dotenv
+gunicorn
+PyMySql
+cryptography

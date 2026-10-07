@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Product Form | Aqua Medicines{% endblock %}
+
+{% block content %}
+<div class="form-card wide">
+  <h1>{{ "Edit Product" if product else "Add Product" }}</h1>
+
+  <form method="post">
+    <label>Product Name
+      <input type="text" name="name" maxlength="160"
+             value="{{ product.name if product else '' }}" required>
+    </label>
+
+    <label>Description
+      <textarea name="description" rows="4">{{ product.description if product else '' }}</textarea>
+    </label>
+
+    <div class="form-row">
+      <label>Price (₹)
+        <input type="number" name="price" min="0" step="0.01"
+               value="{{ product.price if product else '' }}" required>
+      </label>
+
+      <label>Stock Quantity
+        <input type="number" name="stock" min="0" step="1"
+               value="{{ product.stock if product else '0' }}" required>
+      </label>
+    </div>
+
+    <label>Image URL (optional)
+      <input type="url" name="image_url"
+             value="{{ product.image_url if product else '' }}">
+    </label>
+
+    <label class="radio-label">
+      <input type="checkbox" name="active" value="1"
+             {% if not product or product.active %}checked{% endif %}>
+      Visible in store
+    </label>
+
+    <button class="button" type="submit">Save Product</button>
+
+    <a class="button secondary"
+       href="{{ url_for('admin_products') }}">
+      Cancel
+    </a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Manage Products | Aqua Medicines{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+  <h1>Manage Products</h1>
+
+  <a class="button" href="{{ url_for('admin_product_new') }}">
+    Add Product
+  </a>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Visible</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td>{{ product.name }}</td>
+        <td>₹{{ "%.2f"|format(product.price) }}</td>
+        <td>{{ product.stock }}</td>
+        <td>{{ "Yes" if product.active else "No" }}</td>
+        <td class="actions">
+          <a class="button small secondary"
+             href="{{ url_for('admin_product_edit', product_id=product.id) }}">
+            Edit
+          </a>
+
+          {% if product.active %}
+          <form method="post"
+                action="{{ url_for('admin_product_delete', product_id=product.id) }}">
+            <button class="button small danger" type="submit">
+              Hide
+            </button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="5">No products created.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

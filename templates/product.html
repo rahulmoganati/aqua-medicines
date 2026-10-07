@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} | Aqua Medicines{% endblock %}
+
+{% block content %}
+<div class="detail-layout">
+  <div>
+    {% if product.image_url %}
+      <img class="detail-image"
+           src="{{ product.image_url }}"
+           alt="{{ product.name }}">
+    {% else %}
+      <div class="detail-placeholder">🐟</div>
+    {% endif %}
+  </div>
+
+  <div>
+    <p class="eyebrow">PRODUCT DETAILS</p>
+    <h1>{{ product.name }}</h1>
+    <p>{{ product.description }}</p>
+
+    <p class="price large">
+      ₹{{ "%.2f"|format(product.price) }}
+    </p>
+
+    <p>Available stock: {{ product.stock }}</p>
+
+    {% if product.stock > 0 %}
+    <form method="post"
+          action="{{ url_for('add_to_cart', product_id=product.id) }}"
+          class="inline-form">
+      <label>Quantity
+        <input type="number" name="quantity"
+               min="1" max="{{ product.stock }}"
+               value="1" required>
+      </label>
+
+      <button type="submit">Add to cart</button>
+    </form>
+    {% else %}
+      <p>Currently out of stock.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
